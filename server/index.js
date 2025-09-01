@@ -2,7 +2,6 @@ import express from 'express'
 import cors from 'cors'
 import pkg from 'pg'
 
-
 const port = 3001
 const { Pool } = pkg // object destructuring, take pkg.Pool into Pool and create new instances via const x = Pool
 const app = express()
