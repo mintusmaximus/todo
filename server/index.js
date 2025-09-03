@@ -1,5 +1,7 @@
 import express from 'express'
 import cors from 'cors'
+
+// import all endpoints from separate file for cleaner code
 import todoRouter from './routes/todoRouter.js'
 
 const port = process.env.PORT
@@ -10,10 +12,12 @@ app.use(cors())
 app.use(express.json())
 // allows clients to pass parameters in url (?=something etc.)
 app.use(express.urlencoded({extended: false}))
+
+// set / directory to use todo router
 app.use('/', todoRouter)
 app.listen(port)
 
-
+// error handling middleware (4 args), when we ues next(err) it goes here
 app.use((err, req, res, next) => {
     const statusCode = err.status || 500
     res.status(statusCode).json({

@@ -1,3 +1,4 @@
+// import db connection from separate file
 import { pool } from '../helper/db.js'
 import { Router } from 'express'
 
@@ -11,6 +12,7 @@ router.get('/', (req, res, next) => {
     pool.query('SELECT * FROM task', (err, result) => {
         // handle error and return
         if (err) {
+            // next jumps to error handling middleware (in index.js)
             return next (err)
         }
         // if no error, send result
