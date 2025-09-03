@@ -1,7 +1,16 @@
 import { expect } from "chai"
-import { describe, it } from "mocha"
+import { describe, it, before } from "mocha"
+import { initializeTestDB, getToken } from "./helper/test.js"
 
 describe("Testing basic database functionality", () => {
+    let token = null
+    const testUser = {email: "testemail123@foo.com", password: "barbar123"}
+    
+    before(() => {
+        initializeTestDB()
+        token = getToken(testUser.email)
+    })
+
     var id // placeholder id for delete task later
     it("Should get all tasks", async () => {
         const response = await fetch("http://localhost:3001")
@@ -16,7 +25,7 @@ describe("Testing basic database functionality", () => {
         POSTing a new task is done with json body:
         {
             "task": {
-                "description": "bro need som milk"
+                "description": "TASK"
             }
         }
         */
@@ -27,7 +36,10 @@ describe("Testing basic database functionality", () => {
         const response = await fetch("http://localhost:3001/create", {
             method: "post",
             // set post header type to json
-            headers: { "Content-Type": "application/json"},
+            headers: { 
+                "Content-Type": "application/json",
+                Authorization: token
+            },
             // wrap description in task curly brackets 
             body: JSON.stringify({task: newTask})
         })
@@ -59,7 +71,13 @@ describe("Testing basic database functionality", () => {
         // console.log(`http://localhost:3001/delete/${id}`)
 
         const response = await fetch(`http://localhost:3001/delete/${id}`, {
-            method: "delete"
+            method: "delete" // add comma here if testing with auth
+            // TODO THIS MIGHT FAIL SO GO DELETE AUTH FROM DELETE REQUEST IF THIS TEST DOESNT PASS
+            /*
+            headers: {
+                Authorization: token
+            }
+            */
         })
         /*
         successful delete request response:

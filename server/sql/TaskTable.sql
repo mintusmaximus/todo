@@ -3,6 +3,12 @@ create table task (
     description varchar(255) not null
 );
 
+create table account (
+    id serial primary key,
+    email varchar(50) not null unique,
+    password varchar(255) not null
+);
+
 insert into task (description) values 
 ('Complete the project documentation'),
 ('Review the code changes'),

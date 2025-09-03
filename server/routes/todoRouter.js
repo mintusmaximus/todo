@@ -1,7 +1,7 @@
 // import db connection from separate file
 import { pool } from '../helper/db.js'
 import { Router } from 'express'
-
+import { auth } from '../helper/auth.js'
 
 const router = Router()
 
@@ -24,8 +24,8 @@ router.get('/', (req, res, next) => {
 //     console.log(`Server is running on http://localhost:${port}`)
 // })
 
-// .post(path     , callback   => function)
-router.post('/create', (req, res, next) => {
+//    .post(path, middleware function, callback => function body)
+router.post('/create', auth, (req, res, next) => {
     const { task } = req.body // deconstruct request body from request object into task
     // so request body could be 
     /*  
