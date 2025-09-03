@@ -41,7 +41,7 @@ router.post('/signup', (req, res, next) => {
     })
 })
 
-router.post('/signin', (req,res,next) => {
+router.post('/signin', (req, res, next) => {
     const { user } = req.body
     if (!user || !user.email || !user.password) {
         const error = new Error('Email and password are required')
@@ -49,7 +49,10 @@ router.post('/signin', (req,res,next) => {
         return next (error)
     }
     // query returns id, email and password
-    pool.query('SELECT * FROM account WHERE email = $1', [user.email], (err,result) => {
+    pool.query('SELECT * FROM account WHERE email = ($1)', 
+        [user.email], 
+        // console.log('SELECT * FROM account WHERE email = ', user.email),
+        (err,result) => {
         if (err) return next (err)
         // if query returns nothing
         if (result.rows.length === 0) {
@@ -72,7 +75,7 @@ router.post('/signin', (req,res,next) => {
             }
         })
 
-        const token = sign({ user: dbUser.email }, process.env.JWT_SECRET)
+        const token = sign({ user: dbUser.email }, process.env.JWT_SECRET_KEY)
         res.status(200).json({
             id: dbUser.id,
             email: dbUser.email,

@@ -4,7 +4,7 @@ import { initializeTestDB, getToken } from "./helper/test.js"
 
 describe("Testing basic database functionality", () => {
     let token = null
-    const testUser = {email: "testemail123@foo.com", password: "barbar123"}
+    const testUser = {email: "testingbasicDBfunc@foo.com", password: "barbar123"}
     
     before(() => {
         initializeTestDB()
@@ -71,13 +71,10 @@ describe("Testing basic database functionality", () => {
         // console.log(`http://localhost:3001/delete/${id}`)
 
         const response = await fetch(`http://localhost:3001/delete/${id}`, {
-            method: "delete" // add comma here if testing with auth
-            // TODO THIS MIGHT FAIL SO GO DELETE AUTH FROM DELETE REQUEST IF THIS TEST DOESNT PASS
-            /*
+            method: "delete", // add comma here if testing with auth
             headers: {
                 Authorization: token
             }
-            */
         })
         /*
         successful delete request response:
@@ -93,9 +90,13 @@ describe("Testing basic database functionality", () => {
     it("Should not create a task without a description", async () => {
         const response = await fetch("http://localhost:3001/create", {
             method: "post",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({task: null})
+            headers: {
+                "Content-Type": "application/json", 
+                Authorization: token // needs auth despite posting a null task
+            },
+            body: JSON.stringify({task: null}),
         })
+
         // /create endpoint request response with null task ({task:{description: null}}):
         /*
         {

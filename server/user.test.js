@@ -3,14 +3,14 @@ import { describe, it, before } from "mocha"
 import { insertTestUser } from "./helper/test.js"
 
 describe("Testing user management", () => {
-    const user = {email: "foo2@test.com", password: "barpassword"}
+    const user = {email: "testingusermanagement@test.com", password: "bar"}
 
     before(() => {
         insertTestUser(user)
     })
 
     it("should sign up", async () => {
-        const newUser = {email: "foo", password: "bar"}
+        const newUser = {email: "shouldsignup@test.email", password: "bar"} // this account appeared in db
         
         /* response from post:
         {

@@ -14,5 +14,3 @@ create table account (
 
 insert into task (description) values ('My test task');
 insert into task (description) values ('My other test task');
-
-select * from task;

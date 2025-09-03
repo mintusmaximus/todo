@@ -10,6 +10,8 @@ const __dirname = import.meta.dirname
 const initializeTestDB = () => {
     const sql = fs.readFileSync(path.resolve(__dirname, '../sql/TestTable.sql'), 'utf8')
 
+    // console.log(sql) // double checked file read and sql query, works
+
     pool.query(sql, (err) => {
         if (err) {
             console.error("Error initializing database: " + err)
@@ -19,14 +21,14 @@ const initializeTestDB = () => {
     })
 }
 
-const insertTestUser = (email, password) => {
-    hash(password, 10, (err, hashedPassword) => {
+const insertTestUser = (user) => {
+    hash(user.password, 10, (err, hashedPassword) => {
         if (err) {
-            console.error("Error hashing testpassword:" + err)
+            console.error("Error hashing testpassword: " + err)
             return
         }
         pool.query('INSERT INTO account (email, password) VALUES ($1, $2)',
-            [email, hashedPassword],
+            [user.email, hashedPassword],
             (err, result) => {
                 if (err) {
                     console.error("Error inserting test user: ", err)
@@ -38,7 +40,7 @@ const insertTestUser = (email, password) => {
 }
 
 const getToken = (email) => {
-    return jwt.sign({email}, process.env.JWT_SECRET)
+    return jwt.sign({email}, process.env.JWT_SECRET_KEY)
 }
 
 export { initializeTestDB, insertTestUser, getToken }
