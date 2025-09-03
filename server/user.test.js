@@ -1,5 +1,5 @@
-import { expect, before } from "chai"
-import { describe, it } from "mocha"
+import { expect } from "chai"
+import { describe, it, before } from "mocha"
 import { insertTestUser } from "./helper/test.js"
 
 describe("Testing user management", () => {
