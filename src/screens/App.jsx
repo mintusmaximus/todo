@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import { useUser } from '../context/useUser'
 import './App.css'
 import axios from 'axios'
-import Row from './components/Row'
+import Row from '../components/Row'
 
 const url = "http://localhost:3001"
 
@@ -11,6 +12,8 @@ function App() {
   // tasks is array of strings, default empty
   const [tasksList, setTasksList] = useState([])
   
+  const { user } = useUser() 
+
   // useEffect is a React Hook that lets you synchronize a component with an external system.
   // https://react.dev/learn/synchronizing-with-effects
   // https://react.dev/reference/react/useEffect
@@ -39,8 +42,9 @@ function App() {
   // gets called on enter press on 'Add new task' input field
   const addTask = () => {
     // create json format for a new task item
+    const headers = { headers: {Authorization: user.token } }
     const newTask = { description: taskField }
-    axios.post(url+"/create", {task: newTask})
+    axios.post(url + "/create", {task: newTask}, headers)
       .then(response => {
         setTasksList([...tasksList,response.data])
         setTaskField("")
@@ -55,10 +59,11 @@ function App() {
     setTasksList([...tasksList,taskField]) 
     setTaskField('') // reset input field
     */
-    }
+  }
 
   const deleteTask = (deleted) => {
-    axios.delete(url + "/delete/" + deleted)
+    const headers = { headers: {Authorization: user.token } }
+    axios.delete(url + "/delete/" + deleted, headers)
       .then(response => {
         setTasksList(tasksList.filter(item => item.id !== deleted))
       })
