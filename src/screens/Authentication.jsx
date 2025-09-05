@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from '../context/useUser';
+import { useUser } from '../context/useUser'; // using 'user' context
 
 
 export const AuthenticationMode = Object.freeze(
@@ -12,12 +12,14 @@ export const AuthenticationMode = Object.freeze(
 
 
 
-
+// prop is either signin or signup, passed by router when going to either endpoint
 export default function Authentication({authenticationMode}) {
-    const { user, setUser, signUp, signIn } = useUser()
+    const { user, setUser, signUp, signIn } = useUser() // taking values from context
     const navigate = useNavigate()
 
+    // when form submits
     const handleSubmit = async (e) => {
+        // prevent form from doing anything
         e.preventDefault()
 
         const signFunction = authenticationMode === AuthenticationMode.SignUp ? signUp : signIn

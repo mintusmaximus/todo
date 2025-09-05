@@ -6,6 +6,8 @@ import Row from '../components/Row'
 
 const url = "http://localhost:3001"
 
+
+// main element that gets rendered to path '/'
 function App() {
   // a single task is a string, default empty
   const [taskField, setTaskField] = useState('')
