@@ -21,7 +21,7 @@ app.listen(port)
 
 // error handling middleware (4 args), when we ues next(err) it goes here
 app.use((err, req, res, next) => {
-    const statusCode = err.status || 500
+    const statusCode = err.status || 500 // note: "should not create a task without desc." test gets it 500 error code from here, using the 500 fallback instead of err.status :thinking:
     res.status(statusCode).json({
         error: {
             message: err.message,

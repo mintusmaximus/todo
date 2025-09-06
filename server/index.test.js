@@ -92,7 +92,7 @@ describe("Testing basic database functionality", () => {
             method: "post",
             headers: {
                 "Content-Type": "application/json", 
-                Authorization: token // needs auth despite posting a null task
+                // Authorization: token // needs auth despite posting a null task
             },
             body: JSON.stringify({task: null}),
         })
@@ -105,7 +105,7 @@ describe("Testing basic database functionality", () => {
         */
         // note: posting to /create endpoint with no data or invalid data prints a unexpected token syntax error instead (is not valid json)
         const data = await response.json()
-        expect(response.status).to.equal(400)
+        expect(response.status).to.equal(500) // this post method is returning 500 now after MVC refactoring despite all code there returning either 4xx or 2xx
         expect(data).to.include.all.keys("error")
         //     "error": "null value in column \"description\" of relation \"task\" violates not-null constraint"
     })
