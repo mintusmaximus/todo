@@ -32,20 +32,24 @@ const postTask = async (req, res, next) => {
 
 // add auth here?
 const removeTask = async (req, res, next) => {
-    const { id } = req.params
-    console.log("Deleting task with id: " + id)
+    const { id } = req.params // task id is /delete/xx <- that
+    console.log("Deleting task with id: " + id) // log 
 
-    try {
-        if (!id) {
+    try { // wrap the whole thing in a try catch
+        if (!id) { // if no /delete/id
             return next(new ApiError('Task id required'), 400)
         }
 
+        // post the delete request to db with id parameter
         const result = await deleteTask(id)
 
+        // db query returns DELETE 0 when invalid ID, else DELETE 1
         if (result.rowCount === 0) {
             return next(new ApiError('Task not found'), 404)
         }
 
+        // if all the checks pass, return valid HTTP return code and deleted task id
+        console.log("Successfully deleted task with id: " + id)
         return res.status(200).json({id: id})
 
     } catch (error) {
