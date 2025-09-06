@@ -42,7 +42,8 @@ const router = createBrowserRouter (
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <UserProvider> {/*user defined react object, TODO LEARN WHAT THIS DOES LATER*/}
+    <UserProvider> {/*UserProvider has a prop for {( children )}, so the children in this case is RouterProvider */}
+      
       {/* the router object gets passed to a routerprovider, which mounts the path-component object into the react tree */}
       {/* this gives the app navigation and history */}
       <RouterProvider router={router} />
