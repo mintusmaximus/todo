@@ -14,7 +14,7 @@ function App() {
   // tasks is array of strings, default empty
   const [tasksList, setTasksList] = useState([])
   
-  const { user } = useUser() 
+  const { user } = useUser() // grab user info from context
 
   // useEffect is a React Hook that lets you synchronize a component with an external system.
   // https://react.dev/learn/synchronizing-with-effects
@@ -39,7 +39,7 @@ function App() {
       .catch(error => { // catch potential errors
         alert(error.response.data ? error.response.message : error) // throw error response message if it exists, else throw empty error
       })
-  })
+  }, []) // fixed infinite loop 
 
   // gets called on enter press on 'Add new task' input field
   const addTask = () => {
