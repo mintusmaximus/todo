@@ -92,7 +92,7 @@ describe("Testing basic database functionality", () => {
             method: "post",
             headers: {
                 "Content-Type": "application/json", 
-                // Authorization: token // needs auth despite posting a null task
+                Authorization: token // needs auth despite posting a null task
             },
             body: JSON.stringify({task: null}),
         })
