@@ -19,7 +19,7 @@ export default function UserProvider({children}) {
     const userFromStorage = sessionStorage.getItem("user")
 
     // react usestate for holding user info, if userFromStorage exists, JSON parse it, else set {email: ", password: "} as initial state
-    const [user, setUser] = useState(userFromStorage ? JSON.parse(userFromStorage) : {email: ", password: "})
+    const [user, setUser] = useState(userFromStorage ? JSON.parse(userFromStorage) : {email: ""})
     
 
     // create signUp HTTP request handler
